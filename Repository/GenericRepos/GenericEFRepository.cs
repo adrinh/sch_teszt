@@ -53,7 +53,6 @@ namespace Repository.GenericRepos
 
         public virtual void Insert(TEntity newEntity)
         {
-            //lazy loading
             context.Set<TEntity>().Add(newEntity);
             context.Entry<TEntity>(newEntity).State = EntityState.Added;
             context.SaveChanges();
