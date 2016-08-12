@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="results">
+          <Key>
+            <PropertyRef Name="result_id" />
+          </Key>
+          <Property Name="result_id" Type="int" Nullable="false" />
+          <Property Name="result_score1" Type="int" />
+          <Property Name="result_score2" Type="int" />
+        </EntityType>
+        <EntityType Name="scores">
+          <Key>
+            <PropertyRef Name="score_id" />
+          </Key>
+          <Property Name="score_id" Type="int" Nullable="false" />
+          <Property Name="score_team" Type="int" />
+          <Property Name="score_goals" Type="int" />
+          <Property Name="score_against" Type="int" />
+          <Property Name="score_wins" Type="int" />
+        </EntityType>
+        <EntityType Name="teams">
+          <Key>
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="team_name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__results__result___2E1BDC42">
+          <End Role="scores" Type="Self.scores" Multiplicity="0..1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scores">
+              <PropertyRef Name="score_id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="result_score1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__results__result___2F10007B">
+          <End Role="scores" Type="Self.scores" Multiplicity="0..1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scores">
+              <PropertyRef Name="score_id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="result_score2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__scores__score_te__2A4B4B5E">
+          <End Role="teams" Type="Self.teams" Multiplicity="0..1" />
+          <End Role="scores" Type="Self.scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teams">
+              <PropertyRef Name="team_id" />
+            </Principal>
+            <Dependent Role="scores">
+              <PropertyRef Name="score_team" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="results" EntityType="Self.results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scores" EntityType="Self.scores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="teams" EntityType="Self.teams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__results__result___2E1BDC42" Association="Self.FK__results__result___2E1BDC42">
+            <End Role="scores" EntitySet="scores" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__results__result___2F10007B" Association="Self.FK__results__result___2F10007B">
+            <End Role="scores" EntitySet="scores" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__scores__score_te__2A4B4B5E" Association="Self.FK__scores__score_te__2A4B4B5E">
+            <End Role="teams" EntitySet="teams" />
+            <End Role="scores" EntitySet="scores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="results">
+          <Key>
+            <PropertyRef Name="result_id" />
+          </Key>
+          <Property Name="result_id" Type="Int32" Nullable="false" />
+          <Property Name="result_score1" Type="Int32" />
+          <Property Name="result_score2" Type="Int32" />
+          <NavigationProperty Name="scores" Relationship="Self.FK__results__result___2E1BDC42" FromRole="results" ToRole="scores" />
+          <NavigationProperty Name="scores1" Relationship="Self.FK__results__result___2F10007B" FromRole="results" ToRole="scores" />
+        </EntityType>
+        <EntityType Name="scores">
+          <Key>
+            <PropertyRef Name="score_id" />
+          </Key>
+          <Property Name="score_id" Type="Int32" Nullable="false" />
+          <Property Name="score_team" Type="Int32" />
+          <Property Name="score_goals" Type="Int32" />
+          <Property Name="score_against" Type="Int32" />
+          <Property Name="score_wins" Type="Int32" />
+          <NavigationProperty Name="results" Relationship="Self.FK__results__result___2E1BDC42" FromRole="scores" ToRole="results" />
+          <NavigationProperty Name="results1" Relationship="Self.FK__results__result___2F10007B" FromRole="scores" ToRole="results" />
+          <NavigationProperty Name="teams" Relationship="Self.FK__scores__score_te__2A4B4B5E" FromRole="scores" ToRole="teams" />
+        </EntityType>
+        <EntityType Name="teams">
+          <Key>
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="team_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="scores" Relationship="Self.FK__scores__score_te__2A4B4B5E" FromRole="teams" ToRole="scores" />
+        </EntityType>
+        <Association Name="FK__results__result___2E1BDC42">
+          <End Role="scores" Type="Self.scores" Multiplicity="0..1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scores">
+              <PropertyRef Name="score_id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="result_score1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__results__result___2F10007B">
+          <End Role="scores" Type="Self.scores" Multiplicity="0..1" />
+          <End Role="results" Type="Self.results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scores">
+              <PropertyRef Name="score_id" />
+            </Principal>
+            <Dependent Role="results">
+              <PropertyRef Name="result_score2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__scores__score_te__2A4B4B5E">
+          <End Role="teams" Type="Self.teams" Multiplicity="0..1" />
+          <End Role="scores" Type="Self.scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teams">
+              <PropertyRef Name="team_id" />
+            </Principal>
+            <Dependent Role="scores">
+              <PropertyRef Name="score_team" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="results" EntityType="Self.results" />
+          <EntitySet Name="scores" EntityType="Self.scores" />
+          <EntitySet Name="teams" EntityType="Self.teams" />
+          <AssociationSet Name="FK__results__result___2E1BDC42" Association="Self.FK__results__result___2E1BDC42">
+            <End Role="scores" EntitySet="scores" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__results__result___2F10007B" Association="Self.FK__results__result___2F10007B">
+            <End Role="scores" EntitySet="scores" />
+            <End Role="results" EntitySet="results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__scores__score_te__2A4B4B5E" Association="Self.FK__scores__score_te__2A4B4B5E">
+            <End Role="teams" EntitySet="teams" />
+            <End Role="scores" EntitySet="scores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="results">
+            <EntityTypeMapping TypeName="Database1Model.results">
+              <MappingFragment StoreEntitySet="results">
+                <ScalarProperty Name="result_id" ColumnName="result_id" />
+                <ScalarProperty Name="result_score1" ColumnName="result_score1" />
+                <ScalarProperty Name="result_score2" ColumnName="result_score2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scores">
+            <EntityTypeMapping TypeName="Database1Model.scores">
+              <MappingFragment StoreEntitySet="scores">
+                <ScalarProperty Name="score_id" ColumnName="score_id" />
+                <ScalarProperty Name="score_team" ColumnName="score_team" />
+                <ScalarProperty Name="score_goals" ColumnName="score_goals" />
+                <ScalarProperty Name="score_against" ColumnName="score_against" />
+                <ScalarProperty Name="score_wins" ColumnName="score_wins" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teams">
+            <EntityTypeMapping TypeName="Database1Model.teams">
+              <MappingFragment StoreEntitySet="teams">
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
